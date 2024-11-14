@@ -9,8 +9,13 @@ public class Main {
     public static void main(String[] args) {
         // реализуйте алгоритм здесь
         UserServiceImpl userService = new UserServiceImpl();
-//        userService.createUsersTable();
-        userService.dropUsersTable();
+        userService.createUsersTable();
+        userService.saveUser("Name1", "LastName1", (byte) 20);;
+        userService.saveUser("Name2", "LastName2", (byte) 20);
+        userService.saveUser("Name3", "LastName3", (byte) 20);
+        System.out.println(userService.getAllUsers());
+
+//       userService.dropUsersTable();
 //        Util.getConnection();
 //        UserDao userDao = new UserDaoJDBCImpl();
 //
