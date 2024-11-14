@@ -20,16 +20,7 @@ public class Util {
         } catch (SQLException e) {
             System.out.println("Connection failed" + e.getMessage());
             e.printStackTrace();
-        } //finally {
-//            try {
-//                if(connection != null && !connection.isClosed()) {
-//                    connection.close();
-//                }
-//            } catch (SQLException e) {
-//                System.out.println("Connection failed" + e.getMessage());
-//                e.printStackTrace();
-//            }
-//        }
+        }
         return null;
     }
 }
