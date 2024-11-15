@@ -15,7 +15,7 @@ public class UserDaoJDBCImpl implements UserDao {
         String string = "CREATE TABLE users (\n" +
                 "    id INT AUTO_INCREMENT PRIMARY KEY,\n" +
                 "    name VARCHAR(50) NOT NULL UNIQUE,\n" +
-                "    lastName VARCHAR(50) NOT NULL UNIQUE, \n" +
+                "    last_name VARCHAR(50) NOT NULL UNIQUE, \n" +
                 "    age INT\n" +
                 ");";
         try (Connection connection = Util.getConnection();
@@ -39,7 +39,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public void saveUser(String name, String lastName, byte age) {
         String string = "INSERT INTO users (\n" +
                 "name, " +
-                "lastName, " +
+                "last_name, " +
                 "age) " +
                 "VALUES (\'" +
                 name + "\', \'" +
@@ -75,7 +75,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 User user = new User();
                 user.setId(resultSet.getLong("id"));
                 user.setName(resultSet.getString("name"));
-                user.setLastName(resultSet.getString("lastName"));
+                user.setLastName(resultSet.getString("last_name"));
                 user.setAge(resultSet.getByte("age"));
                 users.add(user);
             }
