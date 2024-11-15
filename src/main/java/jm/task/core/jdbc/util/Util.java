@@ -21,6 +21,6 @@ public class Util {
             System.out.println("Connection failed" + e.getMessage());
             e.printStackTrace();
         }
-        return null;
+        return connection;
     }
 }

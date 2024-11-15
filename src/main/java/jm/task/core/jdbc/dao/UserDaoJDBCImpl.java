@@ -2,7 +2,6 @@ package jm.task.core.jdbc.dao;
 
 import jm.task.core.jdbc.model.User;
 import jm.task.core.jdbc.util.Util;
-
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,9 +19,9 @@ public class UserDaoJDBCImpl implements UserDao {
                 "    age INT\n" +
                 ");";
         try (Connection connection = Util.getConnection();
-             PreparedStatement prepearedStatement = connection.prepareStatement(string)) {
-            prepearedStatement.execute();
-        } catch (SQLException e) {
+             PreparedStatement preparedStatement = connection.prepareStatement(string)) {
+            preparedStatement.execute();
+        } catch (SQLException | NullPointerException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -30,8 +29,8 @@ public class UserDaoJDBCImpl implements UserDao {
     public void dropUsersTable() {
         String string = "DROP TABLE users;";
         try (Connection connection = Util.getConnection();
-             PreparedStatement prepearedStatement = connection.prepareStatement(string)) {
-            prepearedStatement.execute();
+             PreparedStatement preparedStatement = connection.prepareStatement(string)) {
+            preparedStatement.execute();
         } catch (SQLException | NullPointerException e) {
             System.out.println(e.getMessage());
         }
