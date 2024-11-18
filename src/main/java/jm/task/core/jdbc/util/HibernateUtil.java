@@ -11,7 +11,7 @@ import jm.task.core.jdbc.model.User;
 
 public class HibernateUtil {
     // Database credentials
-    private static final String URL = "jdbc:mysql://localhost:3306/mvc_schema";
+    private static final String URL = "jdbc:mysql://localhost:3306/mvc_schema&serverTimezone=UTC";
     private static final String USER = "root";
     private static final String PASSWORD = "a%iDT&u76nf";
 
