@@ -11,7 +11,7 @@ import jm.task.core.jdbc.model.User;
 
 public class HibernateUtil {
     // Database credentials
-    private static final String URL = "jdbc:mysql://localhost:3306/mvc_schema&serverTimezone=UTC";
+    private static final String URL = "jdbc:mysql://localhost:3306/mvc_schema";
     private static final String USER = "root";
     private static final String PASSWORD = "a%iDT&u76nf";
 
@@ -27,11 +27,11 @@ public class HibernateUtil {
                 settings.put(Environment.URL, URL);
                 settings.put(Environment.USER, USER);
                 settings.put(Environment.PASS, PASSWORD);
-                settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
+                settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQLDialect");
                 settings.put(Environment.SHOW_SQL, "true");
                 settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
 
-                settings.put(Environment.HBM2DDL_AUTO, "create-drop");
+                settings.put(Environment.HBM2DDL_AUTO, "");
 
                 configuration.setProperties(settings);
 

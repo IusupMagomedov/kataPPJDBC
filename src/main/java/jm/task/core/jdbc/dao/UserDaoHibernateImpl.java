@@ -7,8 +7,11 @@ import jm.task.core.jdbc.util.HibernateUtil;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
@@ -74,9 +77,11 @@ public class UserDaoHibernateImpl implements UserDao {
         List<User> users = null;
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery cq = builder.createQuery(User.class);
-            Query query = session.createQuery(cq);
-            users = query.getResultList();
+            CriteriaQuery<User> cq = builder.createQuery(User.class);
+            Root<User> rootEntry = cq.from(User.class);
+            CriteriaQuery<User> all = cq.select(rootEntry);
+            TypedQuery<User> allQuery = session.createQuery(all);
+            users = allQuery.getResultList();
         } catch (HibernateException e) {
             e.printStackTrace();
         }
@@ -88,12 +93,14 @@ public class UserDaoHibernateImpl implements UserDao {
         List<User> users = null;
         try (Session session = sessionFactory.openSession()) {
             CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery cq = builder.createQuery(User.class);
-            Query query = session.createQuery(cq);
-            users = query.getResultList();
+            CriteriaQuery<User> cq = builder.createQuery(User.class);
+            Root<User> rootEntry = cq.from(User.class);
+            CriteriaQuery<User> all = cq.select(rootEntry);
+            TypedQuery<User> allQuery = session.createQuery(all);
+            users = allQuery.getResultList();
             if (!users.isEmpty()) {
                 for (User user : users) {
-                    session.delete(user);
+                    this.removeUserById(user.getId());
                 }
             }
         } catch (HibernateException e) {
