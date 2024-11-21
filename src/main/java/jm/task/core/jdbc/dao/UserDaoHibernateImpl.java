@@ -100,7 +100,7 @@ public class UserDaoHibernateImpl implements UserDao {
             users = allQuery.getResultList();
             if (!users.isEmpty()) {
                 for (User user : users) {
-                    this.removeUserById(user.getId());
+                    session.delete(session.get(User.class, user.getId()));
                 }
             }
         } catch (HibernateException e) {
