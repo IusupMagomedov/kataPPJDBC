@@ -50,8 +50,10 @@ public class UserDaoHibernateImpl implements UserDao {
     @Override
     public void saveUser(String name, String lastName, byte age) {
         try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
             User user = new User(name, lastName, age);
             session.save(user);
+            transaction.commit();
         } catch (HibernateException e) {
             e.printStackTrace();
         }
@@ -60,12 +62,14 @@ public class UserDaoHibernateImpl implements UserDao {
     @Override
     public void removeUserById(long id) {
         try (Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
             User user = session.get(User.class, id);
             if (user != null) {
                 session.delete(user);
             } else {
                 throw new HibernateException("User not found");
             }
+            transaction.commit();
         } catch (HibernateException e) {
             e.printStackTrace();
         }
@@ -73,15 +77,10 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public List<User> getAllUsers() {
-
         List<User> users = null;
         try (Session session = sessionFactory.openSession()) {
-            CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<User> cq = builder.createQuery(User.class);
-            Root<User> rootEntry = cq.from(User.class);
-            CriteriaQuery<User> all = cq.select(rootEntry);
-            TypedQuery<User> allQuery = session.createQuery(all);
-            users = allQuery.getResultList();
+            Query<User> query = session.createQuery("from User", User.class);
+            users = query.list();
         } catch (HibernateException e) {
             e.printStackTrace();
         }
@@ -90,20 +89,9 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void cleanUsersTable() {
-        List<User> users = null;
         try (Session session = sessionFactory.openSession()) {
             Transaction transaction = session.beginTransaction();
-            CriteriaBuilder builder = session.getCriteriaBuilder();
-            CriteriaQuery<User> cq = builder.createQuery(User.class);
-            Root<User> rootEntry = cq.from(User.class);
-            CriteriaQuery<User> all = cq.select(rootEntry);
-            TypedQuery<User> allQuery = session.createQuery(all);
-            users = allQuery.getResultList();
-            if (!users.isEmpty()) {
-                for (User user : users) {
-                    session.remove(user);
-                }
-            }
+            session.createSQLQuery("TRUNCATE TABLE users").executeUpdate();
             transaction.commit();
         } catch (HibernateException e) {
             e.printStackTrace();
