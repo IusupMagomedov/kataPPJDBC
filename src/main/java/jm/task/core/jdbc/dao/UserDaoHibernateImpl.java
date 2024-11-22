@@ -7,18 +7,12 @@ import jm.task.core.jdbc.util.HibernateUtil;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
 import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
+    private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
     public UserDaoHibernateImpl() {
     }
-    private SessionFactory sessionFactory = HibernateUtil.getSessionFactory();
-
     @Override
     public void createUsersTable() {
         String string = "CREATE TABLE users (\n" +
