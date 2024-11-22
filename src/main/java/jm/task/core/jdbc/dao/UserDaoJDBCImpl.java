@@ -1,7 +1,7 @@
 package jm.task.core.jdbc.dao;
 
 import jm.task.core.jdbc.model.User;
-import jm.task.core.jdbc.util.Util;
+import jm.task.core.jdbc.util.JDBCUtil;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,7 +18,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 "    last_name VARCHAR(50) NOT NULL UNIQUE, \n" +
                 "    age INT\n" +
                 ");";
-        try (Connection connection = Util.getConnection();
+        try (Connection connection = JDBCUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(string)) {
             preparedStatement.execute();
         } catch (SQLException | NullPointerException e) {
@@ -28,7 +28,7 @@ public class UserDaoJDBCImpl implements UserDao {
     @Override
     public void dropUsersTable() {
         String string = "DROP TABLE users;";
-        try (Connection connection = Util.getConnection();
+        try (Connection connection = JDBCUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(string)) {
             preparedStatement.execute();
         } catch (SQLException | NullPointerException e) {
@@ -46,7 +46,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 lastName + "\', " +
                 age + ")";
         System.out.println(string);
-        try (Connection connection = Util.getConnection();
+        try (Connection connection = JDBCUtil.getConnection();
              PreparedStatement prepearedStatement = connection.prepareStatement(string)){
              prepearedStatement.execute();
         } catch (SQLException | NullPointerException e) {
@@ -56,7 +56,7 @@ public class UserDaoJDBCImpl implements UserDao {
     @Override
     public void removeUserById(long id) {
         String string = "DELETE FROM users WHERE id = " + id;
-        try (Connection connection = Util.getConnection();
+        try (Connection connection = JDBCUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(string)){
             preparedStatement.execute();
         } catch (SQLException | NullPointerException e) {
@@ -67,7 +67,7 @@ public class UserDaoJDBCImpl implements UserDao {
     public List<User> getAllUsers() {
         String string = "SELECT * FROM users";
         List<User> users = new ArrayList<>();
-        try (Connection connection = Util.getConnection();
+        try (Connection connection = JDBCUtil.getConnection();
              PreparedStatement preparedStatement = connection.prepareStatement(string)){
             preparedStatement.execute();
             ResultSet resultSet = preparedStatement.getResultSet();
@@ -88,7 +88,7 @@ public class UserDaoJDBCImpl implements UserDao {
     @Override
     public void cleanUsersTable() {
         String string = "DELETE FROM users";
-        try (Connection connection = Util.getConnection();
+        try (Connection connection = JDBCUtil.getConnection();
              PreparedStatement prepearedStatement = connection.prepareStatement(string)){
             prepearedStatement.execute();
         } catch (SQLException | NullPointerException e) {
